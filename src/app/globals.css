@@ -88,7 +88,11 @@
     font-weight: 400;
     /* The guide sets body at 0 tracking; headings pull tighter. */
     letter-spacing: 0;
-    overflow-x: hidden;
+    /* `clip`, not `hidden`: `hidden` makes body a scroll container, which
+       silently breaks scroll-linked measurement and `position: sticky` for
+       everything inside it. `clip` suppresses the overflow without creating
+       the container. */
+    overflow-x: clip;
   }
 
   /* Three weights, no italics. */

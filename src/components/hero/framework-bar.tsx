@@ -141,7 +141,7 @@ export function FrameworkBar() {
         {/* Scope boundary — §1.3 requires this visible, never buried. */}
         <motion.p
           variants={item}
-          className="mt-9 max-w-[68ch] border-t border-line pt-9 text-[0.8125rem] leading-relaxed text-mist"
+          className="mt-10 max-w-[68ch] text-[0.8125rem] leading-relaxed text-mist"
         >
           FIQS supports responsible sourcing workflows and produces audit-ready
           records. Certification of gold and accreditation under any assurance
