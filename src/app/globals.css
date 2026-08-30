@@ -218,8 +218,10 @@
   .pressable {
     transition:
       transform 160ms var(--ease-out-quint),
+      background 200ms ease,
       background-color 160ms ease,
       border-color 160ms ease,
+      box-shadow 200ms ease,
       color 160ms ease;
   }
 
@@ -282,6 +284,49 @@
         rgba(12, 13, 15, 0.34) 72%,
         rgba(12, 13, 15, 0) 100%
       );
+    }
+  }
+
+  /* ----------------------------------------------------------------
+     Lit edge — the primary action.
+
+     A dark fill inside a gold gradient rule, which brightens and throws a
+     glow when pointed at. Two layered backgrounds do the border: the first
+     paints the fill to the padding box, the second paints the gradient to
+     the border box, so a 1px transparent border reveals the gradient
+     without needing a wrapper element.
+
+     The glow is hover-only by design. Ambient glow is decoration and the
+     spec rules it out; a glow that appears under the cursor is feedback,
+     and it says "this is the action" in the one colour reserved for that.
+     ---------------------------------------------------------------- */
+  .btn-lit {
+    border: 1px solid transparent;
+    background:
+      linear-gradient(var(--color-surface-1), var(--color-surface-1)) padding-box,
+      linear-gradient(
+          100deg,
+          rgba(217, 178, 76, 0.25),
+          rgba(255, 228, 158, 0.8) 46%,
+          rgba(217, 178, 76, 0.25)
+        )
+        border-box;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .btn-lit:hover {
+      background:
+        linear-gradient(#14161a, #14161a) padding-box,
+        linear-gradient(
+            100deg,
+            rgba(217, 178, 76, 0.65),
+            #ffe49e 46%,
+            rgba(217, 178, 76, 0.65)
+          )
+          border-box;
+      box-shadow:
+        0 0 20px -4px rgba(217, 178, 76, 0.5),
+        0 0 48px -10px rgba(217, 178, 76, 0.38);
     }
   }
 
