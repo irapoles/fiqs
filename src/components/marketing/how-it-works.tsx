@@ -26,24 +26,85 @@ const STEPS = [
   {
     title: "Onboard",
     body: "Mines and suppliers, with KYC, ownership, site records and GPS verification captured once.",
+    icon: "pin",
   },
   {
     title: "Evaluate",
     body: "Due diligence workflows, sanctions screening, risk reviews and the monthly controls behind them.",
+    icon: "shield",
   },
   {
     title: "Trace",
     body: "Custody events, approvals, transport and refining — each one linked to the record it belongs to.",
+    icon: "link",
   },
   {
     title: "Operate",
     body: "Purchases, sales, inventory, cash movement and the financial controls around them.",
+    icon: "coin",
   },
   {
     title: "Report",
     body: "Audit packs, evidence exports, retention state and management sign-off, for a chosen period.",
+    icon: "doc",
   },
 ] as const;
+
+/**
+ * Step glyphs. 1.4px strokes, matching the hairline weight used across the
+ * product surfaces so the marker reads as part of the same system.
+ *
+ *   pin    — a located site: onboarding is the moment a record gets a place
+ *   shield — screening and risk review
+ *   link   — custody, one record joined to the next
+ *   coin   — the transaction itself
+ *   doc    — the pack that leaves the building
+ */
+function StepIcon({ name }: { name: string }) {
+  const common = {
+    width: 16,
+    height: 16,
+    viewBox: "0 0 16 16",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.4,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+  };
+  const paths: Record<string, React.ReactNode> = {
+    pin: (
+      <>
+        <path d="M8 14.2s4.6-3.9 4.6-7.4a4.6 4.6 0 1 0-9.2 0C3.4 10.3 8 14.2 8 14.2Z" />
+        <circle cx="8" cy="6.7" r="1.7" />
+      </>
+    ),
+    shield: (
+      <>
+        <path d="M8 1.8 13 4v4c0 3-2.2 5.4-5 6.2C5.2 13.4 3 11 3 8V4z" />
+        <path d="M6.2 7.9 7.5 9.2l2.4-2.5" />
+      </>
+    ),
+    link: (
+      <>
+        <path d="M6.6 9.4a2.6 2.6 0 0 0 3.9.3l2-2a2.6 2.6 0 0 0-3.7-3.7l-1.1 1.1" />
+        <path d="M9.4 6.6a2.6 2.6 0 0 0-3.9-.3l-2 2a2.6 2.6 0 0 0 3.7 3.7l1.1-1.1" />
+      </>
+    ),
+    coin: (
+      <>
+        <circle cx="8" cy="8" r="6" />
+        <path d="M8 4.8v6.4M6.3 6.4h2.6a1.3 1.3 0 0 1 0 2.6H6.9a1.3 1.3 0 0 0 0 2.6h2.8" />
+      </>
+    ),
+    doc: (
+      <>
+        <path d="M9 1.8H4.4v12.4h7.2V4.4z" />
+        <path d="M9 1.8v2.6h2.6M6.2 8.4h3.6M6.2 11h2.4" />
+      </>
+    ),
+  };
+  return <svg {...common}>{paths[name] ?? paths.doc}</svg>;
+}
 
 const STEP = {
   hidden: { opacity: 0, y: 20 },
@@ -115,12 +176,15 @@ export function HowItWorks() {
               key={step.title}
               initial={reduce ? false : "hidden"}
               whileInView="visible"
-              viewport={{ once: true, margin: "-120px" }}
+              /* Triggered by how much of the step is on screen rather than a
+                 pixel margin: each step is a full viewport tall, so a fixed
+                 margin would fire it while it is still mostly below the fold. */
+              viewport={{ once: true, amount: 0.35 }}
               variants={STEP}
-              className="grid items-start gap-x-10 gap-y-8 pb-20 last:pb-0 lg:grid-cols-[minmax(0,1fr)_4rem_minmax(0,1.4fr)] lg:gap-y-0 lg:pb-28"
+              className="grid items-center gap-x-10 gap-y-8 pb-20 last:pb-0 lg:min-h-screen lg:grid-cols-[minmax(0,1fr)_4rem_minmax(0,1.4fr)] lg:gap-y-0 lg:pb-0"
             >
               {/* Copy */}
-              <div className="lg:pt-2">
+              <div>
                 {/* Regular, not Medium — 400 is the lightest weight the guide
                     sanctions, and the numeral is a marker rather than a
                     heading, so it should not compete with the title beneath. */}
@@ -144,30 +208,35 @@ export function HowItWorks() {
               {/* Rail — desktop only; on a phone the stack is its own sequence
                   and a vertical line beside it adds nothing.
 
-                  `self-stretch` because the grid is `items-start`, which would
+                  `self-stretch` because the grid centres its items, which would
                   otherwise size this column to the marker and leave the line
-                  nothing to span. The negative bottom carries it through the
-                  row's bottom padding, which sits outside the grid row, so the
-                  segments meet rather than stopping short of one another. */}
-              <div className="relative hidden justify-center self-stretch lg:flex">
+                  nothing to span. Each row is a full viewport, so the segment
+                  runs the whole height and the segments meet end to end. */}
+              {/* `items-center` matters: the column is stretched to the full
+                  row, so without it the marker pins to the top while the copy
+                  and the screen sit centred. */}
+              <div className="relative hidden items-center justify-center self-stretch lg:flex">
+                {/* The unlit rail runs past the last step too, so the sequence
+                    reads as continuous rather than stopping at the marker. */}
+                <span
+                  aria-hidden="true"
+                  className={`absolute top-0 w-px bg-line-strong ${last ? "h-1/2" : "bottom-0"}`}
+                />
                 {!last && (
-                  <>
-                    <span
-                      aria-hidden="true"
-                      className="absolute top-0 -bottom-28 w-px bg-line-strong"
-                    />
-                    <motion.span
-                      aria-hidden="true"
-                      variants={SEGMENT}
-                      className="absolute top-0 -bottom-28 w-px origin-top bg-gradient-to-b from-gold to-[rgba(217,178,76,0.25)]"
-                    />
-                  </>
+                  <motion.span
+                    aria-hidden="true"
+                    variants={SEGMENT}
+                    className="absolute bottom-0 top-0 w-px origin-top bg-gradient-to-b from-gold to-[rgba(217,178,76,0.4)]"
+                  />
                 )}
+                {/* An icon for the work the step does — the number is already
+                    carried by the copy column, so repeating it here would spend
+                    the marker on nothing. */}
                 <motion.span
                   variants={MARKER}
-                  className="relative z-10 flex h-9 w-9 items-center justify-center rounded-full border border-line-strong bg-surface-2 text-[0.75rem] font-medium tabular-nums text-gold"
+                  className="relative z-10 flex h-9 w-9 items-center justify-center rounded-full border border-line-strong bg-surface-2 text-gold"
                 >
-                  {i + 1}
+                  <StepIcon name={step.icon} />
                 </motion.span>
               </div>
 
