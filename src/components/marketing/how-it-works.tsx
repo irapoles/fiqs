@@ -107,11 +107,21 @@ function StepIcon({ name }: { name: string }) {
 }
 
 const STEP = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.5, ease: EASE.outQuint },
+  },
+} as const;
+
+/* Copy and screen each fade and rise, the screen a touch further and a beat
+   later, so the pair arrives with some depth instead of moving as one block. */
+const COPY = {
+  hidden: { opacity: 0, y: 26 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.65, ease: EASE.outQuint },
+    transition: { duration: 0.7, ease: EASE.outQuint },
   },
 } as const;
 
@@ -133,11 +143,11 @@ const MARKER = {
 } as const;
 
 const SCREEN = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 36 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: EASE.outQuint, delay: 0.12 },
+    transition: { duration: 0.8, ease: EASE.outQuint, delay: 0.14 },
   },
 } as const;
 
@@ -177,14 +187,17 @@ export function HowItWorks() {
               initial={reduce ? false : "hidden"}
               whileInView="visible"
               /* Triggered by how much of the step is on screen rather than a
-                 pixel margin: each step is a full viewport tall, so a fixed
-                 margin would fire it while it is still mostly below the fold. */
+                 pixel margin: a step is most of a viewport tall, so a fixed
+                 margin would fire it while it is still largely below the fold. */
               viewport={{ once: true, amount: 0.35 }}
               variants={STEP}
-              className="grid items-center gap-x-10 gap-y-8 pb-20 last:pb-0 lg:min-h-screen lg:grid-cols-[minmax(0,1fr)_4rem_minmax(0,1.4fr)] lg:gap-y-0 lg:pb-0"
+              /* Equal outer columns so the rail sits on the section's centre
+                 line. An asymmetric split puts the rail off-centre, which
+                 reads as a mistake rather than as emphasis. */
+              className="grid items-center gap-x-10 gap-y-8 pb-20 last:pb-0 lg:min-h-[70vh] lg:grid-cols-[minmax(0,1fr)_4rem_minmax(0,1fr)] lg:gap-y-0 lg:pb-0"
             >
               {/* Copy */}
-              <div>
+              <motion.div variants={COPY}>
                 {/* Regular, not Medium — 400 is the lightest weight the guide
                     sanctions, and the numeral is a marker rather than a
                     heading, so it should not compete with the title beneath. */}
@@ -203,7 +216,7 @@ export function HowItWorks() {
                 >
                   {step.body}
                 </p>
-              </div>
+              </motion.div>
 
               {/* Rail — desktop only; on a phone the stack is its own sequence
                   and a vertical line beside it adds nothing.
