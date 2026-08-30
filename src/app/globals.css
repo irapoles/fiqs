@@ -1,26 +1,304 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   FIQS design tokens — Brand & Identity Guidelines v1.0 (2026)
+   Graphite carries the brand. Gold does the pointing. 70/22/8.
+   ============================================================ */
+
+@theme {
+  /* ---- Core surfaces ---- */
+  --color-graphite: #0c0d0f; /* Base surface */
+  --color-paper: #f7f7f5; /* Light surface */
+  --color-gold: #d9b24c; /* Accent, actions */
+  --color-sand: #ffe49e; /* Highlight, charts */
+
+  /* ---- Neutral ramp ---- */
+  --color-seam: #15171a;
+  --color-steel: #2a2d33;
+  --color-ash: #6e747e;
+  --color-mist: #a8aeb8;
+  --color-dust: #e4e5e2;
+
+  /* ---- Surface stack ----------------------------------------------
+     Depth comes from stepping through the graphite scale, never from
+     drop shadows. Each level is the same hue at a different distance,
+     so the hierarchy reads as strata in rock rather than paper lifted
+     off a desk. Nothing in this system casts a shadow.
+     ---------------------------------------------------------------- */
+  --color-surface-0: #08090b; /* Recessed — sunken wells, footer */
+  --color-surface-1: #0c0d0f; /* Canvas — the dominant field */
+  --color-surface-2: #15171a; /* Raised — cards, panels */
+  --color-surface-3: #1c1f23; /* Raised high — controls on cards */
+
+  /* ---- Shape vocabulary — two values, no others ---- */
+  --radius-card: 16px;
+  --radius-small: 6px;
+
+  /* ---- Section rhythm ---- */
+  --spacing-section: 6.5rem;
+
+  /* ---- Compliance states — functional only, never decorative ---- */
+  --color-verified: #2f9e68;
+  --color-review: #e0a32e;
+  --color-breach: #c4442f;
+
+  /* Tinted variants for chips on dark */
+  --color-verified-on-dark: #7fd3a6;
+  --color-review-on-dark: #f0c56b;
+  --color-breach-on-dark: #e88f7c;
+
+  /* ---- Hairlines ---- */
+  --color-line: rgba(255, 255, 255, 0.09);
+  --color-line-soft: rgba(255, 255, 255, 0.06);
+  --color-line-strong: rgba(255, 255, 255, 0.16);
+
+  /* ---- Type ---- */
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* ---- Layout ---- */
+  --spacing-gutter: 3rem;
+  --container-shell: 1320px;
+  /* Narrow measure for centred reading columns. */
+  --container-measure: 44rem;
+
+  /* ---- Easing — custom curves; the built-ins are too weak ---- */
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ============================================================
+   Base
+   ============================================================ */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-graphite);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    /* The guide sets body at 0 tracking; headings pull tighter. */
+    letter-spacing: 0;
+    overflow-x: hidden;
+  }
+
+  /* Three weights, no italics. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 500;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-graphite);
+  }
+
+  /* Focus-visible — WCAG 2.1 AA, gold ring reads on graphite and paper alike. */
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ============================================================
+   Type roles — from §04 of the brand guide
+   ============================================================ */
+
+@layer components {
+  /* Display sets at line-height 1 — the contrast against 1.55 body is what
+     gives the page its rhythm. Tight tracking compensates for the geometric
+     letterforms at scale. */
+  .type-display {
+    font-size: clamp(2.75rem, 6.4vw, 5.25rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-weight: 500;
+  }
+
+  .type-heading {
+    font-size: clamp(1.75rem, 3.4vw, 2.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    font-weight: 500;
+  }
+
+  .type-subhead {
+    font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+    line-height: 1.36;
+    letter-spacing: -0.01em;
+    font-weight: 500;
+  }
+
+  .type-body {
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    letter-spacing: 0;
+    font-weight: 400;
+  }
+
+  /* Label — 12 · 500 · +14%, the one place tracking opens up. Wide tracking
+     is the instrumentation signature; it reads as panel labelling. */
+  .type-label {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .type-label-sm {
+    font-size: 0.625rem;
+    line-height: 1.4;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* Statistics are luminous punctuation — Sand, not Paper, and never used
+     for body copy or controls. */
+  .type-stat {
+    font-size: clamp(2.25rem, 4.4vw, 3.5rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-sand);
+  }
+
+  .type-mono {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: -0.01em;
+    font-variant-ligatures: none;
+  }
+
+  .shell {
+    width: 100%;
+    max-width: var(--container-shell);
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .shell {
+      padding-inline: var(--spacing-gutter);
+    }
+  }
+}
+
+/* ============================================================
+   Utilities
+   ============================================================ */
+
+@layer utilities {
+  /* Pressable — instant feedback that the interface heard the user. */
+  .pressable {
+    transition:
+      transform 160ms var(--ease-out-quint),
+      background-color 160ms ease,
+      border-color 160ms ease,
+      color 160ms ease;
+  }
+
+  .pressable:active {
+    transform: scale(0.97);
+  }
+
+  /* Keep the element on the GPU across a *continuous* animation — kills the
+     1px shake at the start/end of transform transitions.
+
+     Only for things that animate indefinitely (a drift, a pointer-tracked
+     tilt). Never on an element whose animation completes: the promotion
+     outlives the motion, and a page full of orphaned compositing layers
+     costs memory and, on some mobile paint paths, drops out entirely.
+     Motion promotes and releases its own layers for finite transitions. */
+  .gpu {
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+
+  /* 44px minimum hit area without disturbing layout. */
+  .hitbox {
+    position: relative;
+  }
+
+  .hitbox::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Scrim behind the hero copy. The ellipse is wider on small screens because
+     the measure stays near the full width there while the orb shrinks with
+     the viewport — without it the rim runs straight through the body copy. */
+  .hero-scrim {
+    background: radial-gradient(
+      ellipse 74% 42% at 50% 50%,
+      rgba(12, 13, 15, 0.97) 0%,
+      rgba(12, 13, 15, 0.94) 42%,
+      rgba(12, 13, 15, 0.66) 72%,
+      rgba(12, 13, 15, 0) 100%
+    );
+  }
+
+  @media (min-width: 768px) {
+    .hero-scrim {
+      background: radial-gradient(
+        ellipse 46% 40% at 50% 50%,
+        rgba(12, 13, 15, 0.97) 0%,
+        rgba(12, 13, 15, 0.93) 38%,
+        rgba(12, 13, 15, 0.62) 70%,
+        rgba(12, 13, 15, 0) 100%
+      );
+    }
+  }
+
+  .grain {
+    position: relative;
+  }
+
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.028;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pressable {
+    transition: none;
+  }
+
+  .pressable:active {
+    transform: none;
+  }
 }
