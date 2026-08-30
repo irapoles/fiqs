@@ -1,13 +1,14 @@
 import { Hero } from "@/components/hero/hero";
-import { ProofStrip } from "@/components/hero/proof-strip";
+import { FrameworkBar } from "@/components/hero/framework-bar";
 
 export default function HomePage() {
   return (
     <>
       <Hero />
-      <ProofStrip />
-      {/* Sections 5.4 onward follow once the hero is signed off. */}
-      <div className="h-[40vh]" />
+      <FrameworkBar />
+
+      {/* Sections 5.4 onward follow once these are signed off. */}
+      <div className="h-[20vh]" />
     </>
   );
 }

@@ -3,8 +3,8 @@
 import { motion, useReducedMotion } from "motion/react";
 
 import { ButtonLink } from "@/components/ui/button";
-import { CustodyPanel } from "@/components/hero/custody-panel";
-import { ParticleSphere } from "@/components/hero/particle-sphere";
+import { Dashboard } from "@/components/product/dashboard";
+import { ParticleStone } from "@/components/hero/particle-stone";
 import { EASE, STAGGER } from "@/lib/motion";
 
 /** Words rise in sequence — the headline assembles rather than appears. */
@@ -43,7 +43,7 @@ export function Hero() {
           transition={{ duration: 1.9, ease: EASE.outQuint, delay: 0.15 }}
           className="h-full w-full"
         >
-          <ParticleSphere />
+          <ParticleStone className="h-full w-full" />
         </motion.div>
       </div>
 
@@ -150,10 +150,10 @@ export function Hero() {
       </div>
 
       {/* ---- Product composition ----
-          Lifted out of the fold so the orb owns the first screen and the
-          software owns the scroll that follows. */}
-      <div className="shell relative -mt-8 pb-[var(--spacing-section)]">
-        <CustodyPanel />
+          The actual operator view, lifted out of the fold so the orb owns the
+          first screen and the software owns the scroll that follows. */}
+      <div className="shell relative -mt-10 pb-[var(--spacing-section)]">
+        <Dashboard />
       </div>
     </section>
   );

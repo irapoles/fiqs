@@ -253,15 +253,18 @@
     min-height: 44px;
   }
 
-  /* Scrim behind the hero copy. The ellipse is wider on small screens because
-     the measure stays near the full width there while the orb shrinks with
-     the viewport — without it the rim runs straight through the body copy. */
+  /* Scrim behind the hero copy.
+     Tuned for the stone, which is a dark mass rather than a bright point
+     cloud — it needs far less holding back than a luminous figure would, so
+     the centre sits around 0.7 and lets the ore read through the type block.
+     The ellipse is wider on small screens because the measure stays near the
+     full width there while the stone shrinks with the viewport. */
   .hero-scrim {
     background: radial-gradient(
-      ellipse 74% 42% at 50% 50%,
-      rgba(12, 13, 15, 0.97) 0%,
-      rgba(12, 13, 15, 0.94) 42%,
-      rgba(12, 13, 15, 0.66) 72%,
+      ellipse 78% 46% at 50% 50%,
+      rgba(12, 13, 15, 0.82) 0%,
+      rgba(12, 13, 15, 0.7) 46%,
+      rgba(12, 13, 15, 0.4) 74%,
       rgba(12, 13, 15, 0) 100%
     );
   }
@@ -269,10 +272,10 @@
   @media (min-width: 768px) {
     .hero-scrim {
       background: radial-gradient(
-        ellipse 46% 40% at 50% 50%,
-        rgba(12, 13, 15, 0.97) 0%,
-        rgba(12, 13, 15, 0.93) 38%,
-        rgba(12, 13, 15, 0.62) 70%,
+        ellipse 50% 44% at 50% 50%,
+        rgba(12, 13, 15, 0.78) 0%,
+        rgba(12, 13, 15, 0.64) 44%,
+        rgba(12, 13, 15, 0.34) 72%,
         rgba(12, 13, 15, 0) 100%
       );
     }
