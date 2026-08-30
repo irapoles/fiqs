@@ -20,13 +20,15 @@ const VARIANTS: Record<Variant, string> = {
   ghost: "text-mist hover:text-paper",
 };
 
-/* The primary is a pill; the rest keep the system's 6px control radius. This
-   is a deliberate departure from the guide's two-radius vocabulary, confined
-   to the one element it was asked for. */
+/* Buttons are pills. A deliberate departure from the guide's two-radius
+   vocabulary (16px cards, 6px controls), which still governs every other
+   control — inputs, chips, cards and the range pills inside the product
+   surfaces all keep 6px. Ghost is included so its focus ring shares the
+   shape, even though it carries no fill of its own. */
 const RADIUS: Record<Variant, string> = {
   primary: "rounded-full",
-  secondary: "rounded-[var(--radius-small)]",
-  ghost: "rounded-[var(--radius-small)]",
+  secondary: "rounded-full",
+  ghost: "rounded-full",
 };
 
 const BASE =
@@ -34,7 +36,7 @@ const BASE =
 
 const PADDING: Record<Variant, string> = {
   primary: "px-[1.625rem] py-[0.875rem]",
-  secondary: "px-[1.375rem] py-[0.875rem]",
+  secondary: "px-[1.625rem] py-[0.875rem]",
   ghost: "px-2 py-[0.875rem]",
 };
 
