@@ -23,27 +23,41 @@ const rise = {
   },
 } as const;
 
-/** Page header. Sits under the fixed bar, so it carries its own top space. */
+/**
+ * Page header. Sits under the fixed bar, so it carries its own top space.
+ *
+ * `aside` opens a second column for a visual. Without it the header keeps its
+ * single-column measure — the two-column form is opt-in, so a page only pays
+ * for the layout when it has something to put there.
+ */
 export function PageHero({
   eyebrow,
   title,
   lead,
+  aside,
   children,
 }: {
   eyebrow: string;
   title: string;
   lead?: string;
+  aside?: ReactNode;
   children?: ReactNode;
 }) {
   const reduce = useReducedMotion();
 
   return (
-    <header className="shell pb-16 pt-36 lg:pb-24 lg:pt-44">
+    <header
+      className={`shell pb-16 pt-36 lg:pb-24 lg:pt-44 ${
+        aside
+          ? "grid items-center gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-16"
+          : ""
+      }`}
+    >
       <motion.div
         initial={reduce ? undefined : "hidden"}
         animate="visible"
         variants={{ visible: { transition: { staggerChildren: STAGGER.normal } } }}
-        className="max-w-[52rem]"
+        className={aside ? "" : "max-w-[52rem]"}
       >
         <motion.p variants={rise} className="type-label mb-7 text-gold">
           {eyebrow}
@@ -66,6 +80,16 @@ export function PageHero({
           </motion.div>
         )}
       </motion.div>
+
+      {aside && (
+        <motion.div
+          initial={reduce ? false : { opacity: 0, scale: 0.96, y: 18 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 1, ease: EASE.outQuint, delay: 0.35 }}
+        >
+          {aside}
+        </motion.div>
+      )}
     </header>
   );
 }

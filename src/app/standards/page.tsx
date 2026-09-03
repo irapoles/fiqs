@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 
 import { PageHero, Section, CardGrid, Card, RowList, ScopeNote } from "@/components/marketing/page-shell";
 import { FinalCta } from "@/components/marketing/final-cta";
@@ -62,6 +63,22 @@ export default function StandardsPage() {
         eyebrow="Standards & compliance"
         title="Built for responsible gold operators"
         lead="FIQS supports responsible sourcing workflows aligned with the LBMA ASM Toolkit, the OECD Due Diligence Guidance and the expectations of third-party assurance. The platform helps operators maintain structured records, document monthly due diligence, escalate risk and preserve audit-ready evidence."
+        aside={
+          /* Faceted collage of industrial and artisanal work. Guide §05 asks
+             for both to carry equal dignity in the frame, and the three panels
+             here do exactly that. Decorative beside a heading that already
+             names the subject, so the alt is empty rather than a description
+             a screen reader would have to sit through. */
+          <Image
+            src="/photos/hero-collage.png"
+            alt=""
+            width={1285}
+            height={1418}
+            priority
+            sizes="(min-width: 1024px) 44vw, 80vw"
+            className="mx-auto h-auto w-full max-w-[26rem] lg:max-w-none"
+          />
+        }
       />
 
       <Section

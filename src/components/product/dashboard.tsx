@@ -388,12 +388,43 @@ function Attention() {
 /* Dashboard                                                           */
 /* ================================================================== */
 
-export function Dashboard() {
+/**
+ * `compact` is the homepage treatment: the top two rows only, clamped and
+ * faded out at the foot so the panel reads as a working application
+ * continuing below rather than as a screenshot that ran out. The full
+ * dashboard is more detail than a first-time visitor can absorb, and at full
+ * height it dwarfs the copy above it.
+ *
+ * The demonstration-data marker moves to the head in compact mode. It is
+ * required by §5.2, and the fade would swallow it at the foot.
+ */
+export function Dashboard({ compact = false }: { compact?: boolean }) {
   const reduce = useReducedMotion();
 
   return (
-    <div className="overflow-hidden rounded-[var(--radius-card)] bg-surface-1">
-      <div className="flex">
+    <div className="relative overflow-hidden rounded-[var(--radius-card)] bg-surface-1">
+      {compact && (
+        <div className="flex items-center gap-2 border-b border-line bg-surface-0 px-6 py-3">
+          <span aria-hidden="true" className="h-1 w-1 rounded-full bg-mist" />
+          <span className="text-[0.6875rem] tracking-[0.06em] text-mist">
+            Demonstration data · not a production record
+          </span>
+        </div>
+      )}
+
+      <div
+        className={compact ? "flex max-h-[32rem] lg:max-h-[38rem]" : "flex"}
+        style={
+          compact
+            ? {
+                maskImage:
+                  "linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%)",
+                WebkitMaskImage:
+                  "linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%)",
+              }
+            : undefined
+        }
+      >
         <Sidebar />
 
         <div className="min-w-0 flex-1 bg-surface-1 p-4 sm:p-6">
@@ -426,6 +457,8 @@ export function Dashboard() {
           </div>
 
           {/* ---- Sign-off gauge + monthly volume ---- */}
+          {!compact && (
+          <>
           <div className="mb-4 grid gap-4 lg:grid-cols-[1fr_1.5fr]">
             <Card title="Lots with a complete signature set" delay={0.05}>
               <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-center sm:gap-8">
@@ -505,16 +538,21 @@ export function Dashboard() {
               <Attention />
             </Card>
           </div>
+          </>
+          )}
         </div>
       </div>
 
-      {/* Spec §5.2 — public figures must be real or plainly marked. */}
+      {/* Spec §5.2 — public figures must be real or plainly marked. In
+          compact mode this sits at the head instead, above the fade. */}
+      {!compact && (
       <div className="flex items-center gap-2 border-t border-line bg-surface-0 px-6 py-3">
         <span aria-hidden="true" className="h-1 w-1 rounded-full bg-mist" />
         <span className="text-[0.6875rem] tracking-[0.06em] text-mist">
           Demonstration data · not a production record
         </span>
       </div>
+      )}
     </div>
   );
 }

@@ -153,7 +153,7 @@ export function Hero() {
           The actual operator view, lifted out of the fold so the orb owns the
           first screen and the software owns the scroll that follows. */}
       <div className="shell relative -mt-10 pb-[var(--spacing-section)]">
-        <Dashboard />
+        <Dashboard compact />
       </div>
     </section>
   );
