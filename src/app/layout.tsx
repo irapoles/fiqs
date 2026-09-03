@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { SiteHeader } from "@/components/layout/site-header";
+import { SiteFooter } from "@/components/layout/site-footer";
 
 import "./globals.css";
 
@@ -64,6 +65,7 @@ export default function RootLayout({
         </a>
         <SiteHeader />
         <main id="main">{children}</main>
+        <SiteFooter />
       </body>
     </html>
   );

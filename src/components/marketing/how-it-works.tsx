@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "motion/react";
 
 import { EASE } from "@/lib/motion";
-import { STEP_SCREENS } from "@/components/product/step-screens";
+import { STEP_SCREENS } from "@/components/product/module-screens";
 
 /**
  * The operating sequence — spec §5.5.
