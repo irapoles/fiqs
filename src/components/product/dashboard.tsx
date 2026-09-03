@@ -443,7 +443,7 @@ export function Dashboard({ compact = false }: { compact?: boolean }) {
 
           {/* ---- Stage mix + coverage ---- */}
           <div className="mb-4 grid gap-4 lg:grid-cols-[1.15fr_1fr]">
-            <Card title="Custody events by stage" delay={0.05}>
+            <Card title="Custody events by stage" delay={0.05} fill>
               <StageDonut />
             </Card>
 

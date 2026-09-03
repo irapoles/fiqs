@@ -51,10 +51,10 @@ export function StageDonut() {
   const [hover, setHover] = useState<number | null>(null);
 
   const total = STAGE_MIX.reduce((sum, s) => sum + s.value, 0);
-  const size = 188;
+  const size = 224;
   const cx = size / 2;
   const cy = size / 2;
-  const r = 74;
+  const r = 89;
   const circ = circumference(r);
 
   // Running offsets so each arc starts where the last ended. A 2px surface gap
@@ -70,7 +70,7 @@ export function StageDonut() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
+    <div className="flex h-full flex-col justify-center gap-7 sm:flex-row sm:items-center sm:justify-start">
       <div className="relative shrink-0" style={{ width: size, height: size }}>
         <svg width={size} height={size} className="overflow-visible">
           <g>
@@ -84,7 +84,7 @@ export function StageDonut() {
                   r={r}
                   fill="none"
                   stroke={STAGE_RAMP[a.i]}
-                  strokeWidth={hover === a.i ? 18 : 14}
+                  strokeWidth={hover === a.i ? 21 : 17}
                   strokeLinecap="butt"
                   // 2px of surface between segments, expressed in arc length.
                   strokeDasharray={`${Math.max(a.fraction * circ - 2, 0)} ${circ}`}
@@ -108,16 +108,16 @@ export function StageDonut() {
           </g>
           <text
             x={cx}
-            y={cy - 4}
+            y={cy - 3}
             textAnchor="middle"
-            className="fill-paper text-[1.75rem] font-medium tabular-nums"
+            className="fill-paper text-[2rem] font-medium tabular-nums"
             style={{ letterSpacing: "-0.04em" }}
           >
             {total.toLocaleString("en-GB")}
           </text>
           <text
             x={cx}
-            y={cy + 16}
+            y={cy + 19}
             textAnchor="middle"
             className="text-[0.625rem] uppercase"
             style={{ fill: INK.secondary, letterSpacing: "0.14em" }}
