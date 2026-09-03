@@ -330,6 +330,29 @@
     }
   }
 
+  /* Menu entry.
+     Written as a `from` keyframe with no fill mode, so the resting state is
+     the visible one. A CSS animation rather than a Motion exit transition
+     because the panel is conditionally rendered — there is nothing to animate
+     out, and the entry should not depend on the element surviving its own
+     removal. */
+  @keyframes menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-0.75rem);
+    }
+  }
+
+  .menu-in {
+    animation: menu-in 240ms var(--ease-out-quint);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .menu-in {
+      animation: none;
+    }
+  }
+
   .grain {
     position: relative;
   }

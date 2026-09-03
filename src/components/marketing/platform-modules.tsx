@@ -49,7 +49,7 @@ export function PlatformModules() {
       {/* ---- Module navigation ---- */}
       <nav
         aria-label="Platform modules"
-        className="lg:sticky lg:top-28 lg:self-start"
+        className="min-w-0 lg:sticky lg:top-28 lg:self-start"
       >
         <h2 className="type-label-sm mb-5 text-mist">Modules</h2>
 
@@ -84,7 +84,7 @@ export function PlatformModules() {
       </nav>
 
       {/* ---- Module sections ---- */}
-      <div className="flex flex-col gap-20 lg:gap-28">
+      <div className="flex min-w-0 flex-col gap-20 lg:gap-28">
         {MODULES.map((m) => {
           const Screen = MODULE_SCREENS[m.id];
           return (
