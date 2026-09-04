@@ -7,6 +7,7 @@ import {
   INK,
   STAGES,
   STAGE_RAMP,
+  ACCENT,
   STATUS,
   SURFACE,
   circumference,
@@ -267,7 +268,10 @@ export function SignOffGauge({
         <motion.path
           d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`}
           fill="none"
-          stroke={STATUS.review}
+          /* Accent, not the review amber. 94% of lots signed is progress, not
+             a warning, and a status colour used for a completion arc teaches
+             the reader that amber means nothing in particular. */
+          stroke={ACCENT}
           strokeWidth={stroke}
           strokeLinecap="round"
           strokeDasharray={semi}
@@ -279,7 +283,7 @@ export function SignOffGauge({
       </svg>
 
       <div className="absolute inset-x-0 bottom-1 flex flex-col items-center">
-        <span className="text-[2rem] font-medium leading-none tracking-[-0.04em] tabular-nums text-sand">
+        <span className="text-[2rem] font-medium leading-none tracking-[-0.04em] tabular-nums text-paper">
           {Math.round(fraction * 100)}%
         </span>
         <span className="mt-1.5 text-[0.75rem] text-mist">{label}</span>
@@ -467,8 +471,8 @@ export function ReviewTrend() {
       >
         <defs>
           <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#D9B24C" stopOpacity="0.34" />
-            <stop offset="100%" stopColor="#D9B24C" stopOpacity="0" />
+            <stop offset="0%" stopColor={ACCENT} stopOpacity="0.34" />
+            <stop offset="100%" stopColor={ACCENT} stopOpacity="0" />
           </linearGradient>
         </defs>
 
@@ -503,7 +507,7 @@ export function ReviewTrend() {
         <motion.path
           d={line}
           fill="none"
-          stroke="#D9B24C"
+          stroke={ACCENT}
           strokeWidth={2}
           strokeLinecap="round"
           initial={reduce ? false : { pathLength: 0 }}
@@ -527,7 +531,7 @@ export function ReviewTrend() {
               cx={points[hover].x}
               cy={points[hover].y}
               r={5}
-              fill="#D9B24C"
+              fill={ACCENT}
               stroke={SURFACE}
               strokeWidth={2}
             />

@@ -353,6 +353,40 @@
     }
   }
 
+  /* ----------------------------------------------------------------
+     Product skin.
+
+     The mock product surfaces take the application's own palette rather
+     than the marketing one, so a visitor who later signs in recognises
+     what they were shown. It works by re-pointing the surface, hairline
+     and ink tokens on a scope, so every `bg-surface-*` / `border-line` /
+     `text-mist` inside keeps working and nothing had to be rewritten
+     class by class.
+
+     Note the ink: the product's own greys measure *better* on its card
+     than the brand's do on ours — #7E89AC is 5.44:1 against #111114,
+     where brand Ash was 3.82:1 and under AA for small text.
+
+     Gold is not re-pointed. It stays on the active nav item and the
+     primary action, which is the one thread tying the panel to the
+     brand; everything else here is the product's.
+     ---------------------------------------------------------------- */
+  .product-skin {
+    --color-surface-0: #08080b; /* Rail, footer */
+    --color-surface-1: #0a0a0e; /* Canvas behind the cards */
+    --color-surface-2: #111114; /* Card */
+    --color-surface-3: #1b1b22; /* Control on a card */
+
+    --color-line: #2a2a35;
+    --color-line-soft: rgba(42, 42, 53, 0.55);
+    --color-line-strong: #3a3a48;
+
+    --color-paper: #fafafa;
+    --color-dust: #e6e6e6;
+    --color-mist: #aeb9e1;
+    --color-ash: #7e89ac;
+  }
+
   .grain {
     position: relative;
   }

@@ -45,7 +45,7 @@ export function Chrome({
   children: React.ReactNode;
 }) {
   return (
-    <div className="overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface-1">
+    <div className="product-skin overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface-1">
       <div className="flex">
         <div className="hidden w-[8.5rem] shrink-0 flex-col border-r border-line bg-surface-0 py-3 sm:flex">
           <div className="mb-3 flex items-center gap-1.5 px-3">

@@ -270,7 +270,7 @@ function DeltaBadge({ value, up = true }: { value: string; up?: boolean }) {
       className="inline-flex items-center gap-1 rounded-[var(--radius-small)] px-1.5 py-0.5 text-[0.6875rem] font-medium"
       style={{
         color: STATUS.verified,
-        background: "rgba(47,158,104,0.14)",
+        background: "rgba(20,202,116,0.14)",
       }}
     >
       {value}
@@ -300,7 +300,10 @@ function Tile({ item, index }: { item: (typeof TILES)[number]; index: number }) 
       className="rounded-[var(--radius-card)] bg-surface-2 p-5"
     >
       <div className="type-label-sm mb-4 text-mist">{item.label}</div>
-      <div className="mb-4 text-[2.25rem] font-medium leading-none tracking-[-0.04em] tabular-nums text-sand">
+      {/* White, not Sand. Luminous statistics are a marketing rule; inside the
+          product mock the product's own convention wins, and its hero figures
+          are near-white. */}
+      <div className="mb-4 text-[2.25rem] font-medium leading-none tracking-[-0.04em] tabular-nums text-paper">
         {reduce ? item.value : shown}
       </div>
       <div className="inline-flex items-center gap-1.5 rounded-[var(--radius-small)] bg-surface-3 px-2 py-1">
@@ -402,7 +405,7 @@ export function Dashboard({ compact = false }: { compact?: boolean }) {
   const reduce = useReducedMotion();
 
   return (
-    <div className="relative overflow-hidden rounded-[var(--radius-card)] bg-surface-1">
+    <div className="product-skin relative overflow-hidden rounded-[var(--radius-card)] bg-surface-1">
       {compact && (
         <div className="flex items-center gap-2 border-b border-line bg-surface-0 px-6 py-3">
           <span aria-hidden="true" className="h-1 w-1 rounded-full bg-mist" />
@@ -412,22 +415,39 @@ export function Dashboard({ compact = false }: { compact?: boolean }) {
         </div>
       )}
 
+      {/* No height clamp. Compact already drops the rows below, so the panel
+          ends of its own accord — clamping on top of that cut the stage card
+          in half.
+
+          The fade is a fixed 6rem band measured from the bottom, not a
+          percentage, and the column carries 7rem of padding beneath the last
+          card. A percentage moves with the content: at one breakpoint it fell
+          on padding, at another it took a bite out of a card. In pixels the
+          band can only ever land inside the padding, so nothing is dimmed and
+          the panel still reads as an application continuing below. */}
       <div
-        className={compact ? "flex max-h-[32rem] lg:max-h-[38rem]" : "flex"}
+        className="flex"
         style={
           compact
             ? {
                 maskImage:
-                  "linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%)",
+                  "linear-gradient(to bottom, #000 calc(100% - 6rem), transparent 100%)",
                 WebkitMaskImage:
-                  "linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%)",
+                  "linear-gradient(to bottom, #000 calc(100% - 6rem), transparent 100%)",
               }
             : undefined
         }
       >
         <Sidebar />
 
-        <div className="min-w-0 flex-1 bg-surface-1 p-4 sm:p-6">
+        {/* The bottom padding is set here rather than as a `pb-*` class: it has
+            to exceed the 6rem mask band above, and a utility loses that
+            relationship — `sm:p-6` outranks an unprefixed `pb-28`, which
+            silently left 1.5rem and put a card back under the fade. */}
+        <div
+          className="min-w-0 flex-1 bg-surface-1 p-4 sm:p-6"
+          style={compact ? { paddingBottom: "7rem" } : undefined}
+        >
           {/* ---- Tiles ---- */}
           <motion.div
             initial={reduce ? undefined : "hidden"}
@@ -517,7 +537,7 @@ export function Dashboard({ compact = false }: { compact?: boolean }) {
             >
               <div className="flex h-full flex-col">
                 <div className="mb-5 flex shrink-0 items-center gap-3">
-                  <span className="text-[2rem] font-medium leading-none tracking-[-0.04em] tabular-nums text-sand">
+                  <span className="text-[2rem] font-medium leading-none tracking-[-0.04em] tabular-nums text-paper">
                     {REVIEW_TOTAL}
                   </span>
                   <DeltaBadge value="16.8%" />
