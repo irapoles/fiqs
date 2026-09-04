@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { PageHero, Section, CardGrid, Card, PendingNotice } from "@/components/marketing/page-shell";
+import { ParticleMark } from "@/components/hero/particle-mark";
 
 export const metadata: Metadata = {
   title: "Build directly against FIQS",
@@ -19,7 +20,14 @@ const PIECES = [
 export default function Page() {
   return (
     <>
-      <PageHero eyebrow="Developers" title="Build directly against FIQS" lead="FIQS is designed to expose suppliers, custody events, transactions, screening results and documents through a REST API, with webhooks for event-driven integration." />
+      <PageHero
+        eyebrow="Developers"
+        title="Build directly against FIQS"
+        lead="FIQS is designed to expose suppliers, custody events, transactions, screening results and documents through a REST API, with webhooks for event-driven integration."
+        aside={
+          <ParticleMark className="relative mx-auto aspect-square w-full max-w-[26rem] lg:max-w-none" />
+        }
+      />
 
       <Section eyebrow="What it will include" title="Planned scope">
         <CardGrid>
