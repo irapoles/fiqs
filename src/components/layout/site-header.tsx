@@ -84,7 +84,12 @@ export function SiteHeader() {
               <Wordmark tone="light" className="h-[1.375rem] w-auto" />
             </Link>
 
-            <nav className="hidden items-center gap-6 lg:flex">
+            {/* Tighter between lg and xl. The inline nav appears at 1024,
+                where its six labels plus the two pills come to 5px more than
+                the bar can hold and "Chain of Custody" wraps to two lines;
+                4px off each of the five gaps buys back 20px. Full gap returns
+                at xl, where there is room for it. */}
+            <nav className="hidden items-center gap-5 lg:flex xl:gap-6">
               {NAV.map((item) => (
                 <Link
                   key={item.href}
@@ -99,13 +104,21 @@ export function SiteHeader() {
               ))}
             </nav>
 
-            <div className="flex shrink-0 items-center gap-3 sm:gap-5">
-              <Link
-                href="/sign-in"
-                className="pressable hitbox type-label-sm hidden text-mist hover:text-paper sm:block"
-              >
-                Sign in
-              </Link>
+            <div className="flex shrink-0 items-center gap-2.5 sm:gap-3">
+              {/* Wrapped rather than given `hidden sm:inline-flex` directly:
+                  the button's own base class already sets `inline-flex`, and
+                  two unprefixed display utilities on one element are settled
+                  by Tailwind's ordering rather than by the order they appear
+                  in the attribute. That tie has already been lost once here.
+
+                  Secondary, so the pair reads as one primary and one way in —
+                  gold is the action colour and a second gold pill beside
+                  "Book a demo" would leave the bar with two of them. */}
+              <span className="hidden sm:inline-flex">
+                <ButtonLink href="/sign-in" variant="secondary">
+                  Sign in
+                </ButtonLink>
+              </span>
               <ButtonLink href="/demo" variant="primary">
                 Book a demo
               </ButtonLink>
