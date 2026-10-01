@@ -96,12 +96,17 @@ export function PageHero({
 
 /** A titled band. `tone="recessed"` sinks it a step for alternation. */
 export function Section({
+  id,
   eyebrow,
   title,
   lead,
   tone = "canvas",
   children,
 }: {
+  /* An anchor target. `scroll-mt` comes with it rather than being left to the
+     caller: the header is fixed, so a bare `id` lands the heading underneath
+     it every time. */
+  id?: string;
   eyebrow?: string;
   title?: string;
   lead?: string;
@@ -112,10 +117,12 @@ export function Section({
 
   return (
     <section
+      id={id}
       className={
-        tone === "recessed"
+        (id ? "scroll-mt-24 " : "") +
+        (tone === "recessed"
           ? "border-y border-line bg-surface-0 py-[var(--spacing-section)]"
-          : "py-[var(--spacing-section)]"
+          : "py-[var(--spacing-section)]")
       }
     >
       <div className="shell">

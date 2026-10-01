@@ -203,11 +203,25 @@ function Screening() {
 /* 5 · Due diligence workflow                                        */
 /* ---------------------------------------------------------------- */
 
+/**
+ * Every item on this checklist is a risk being screened *for*, so a tick was
+ * saying the opposite of what was meant: it read as "child labour — done".
+ * The mark is now an X, which reads as "looked for, not found", and the
+ * legend states that outright rather than trusting the glyph to carry it.
+ *
+ * "Human rights" became "Human rights abuses" for the same reason — as a bare
+ * category it is the one label on the list that could be read as a thing you
+ * want to find.
+ *
+ * The counter says "screened" rather than "complete": five returned a result,
+ * the sixth is still open, and "complete" invited the reader to total the
+ * ticks as progress.
+ */
 function DueDiligence() {
   const checks = [
     "Child labour",
     "Forced labour",
-    "Human rights",
+    "Human rights abuses",
     "Bribery & corruption",
     "Sanctions exposure",
     "Chain-of-custody gaps",
@@ -217,24 +231,24 @@ function DueDiligence() {
     <Chrome title="Monthly review — August 2026" actions={["Submit"]} active="Due diligence">
       <div className="mb-2.5 flex items-center justify-between">
         <span className="text-[0.625rem] font-medium text-paper">Control checklist</span>
-        <span className="text-[0.5625rem] text-mist">5 of 6 complete</span>
+        <span className="text-[0.5625rem] text-mist">5 of 6 screened</span>
       </div>
       <div className="grid grid-cols-2 gap-x-3 gap-y-1.5">
         {checks.map((c, i) => {
-          const done = i < 5;
+          const screened = i < 5;
           return (
             <div key={c} className="flex items-center gap-2">
               <span
                 aria-hidden="true"
                 className="flex h-3 w-3 shrink-0 items-center justify-center rounded-[2px] border"
                 style={{
-                  borderColor: done ? STATUS.verified : "rgba(255,255,255,0.18)",
-                  background: done ? "rgba(47,158,104,0.2)" : "transparent",
+                  borderColor: screened ? STATUS.verified : "rgba(255,255,255,0.18)",
+                  background: screened ? "rgba(20,202,116,0.18)" : "transparent",
                 }}
               >
-                {done && (
-                  <svg width="7" height="7" viewBox="0 0 8 8" fill="none" stroke={STATUS.verified} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M1.5 4.2 3.2 6 6.5 2.2" />
+                {screened && (
+                  <svg width="7" height="7" viewBox="0 0 8 8" fill="none" stroke={STATUS.verified} strokeWidth="1.6" strokeLinecap="round">
+                    <path d="M2 2 6 6M6 2 2 6" />
                   </svg>
                 )}
               </span>
@@ -242,6 +256,24 @@ function DueDiligence() {
             </div>
           );
         })}
+      </div>
+
+      {/* The legend is not optional decoration. An X is only unambiguous once
+          something on screen says which way round it reads. */}
+      <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-line pt-2">
+        <span className="flex items-center gap-1.5">
+          <svg width="7" height="7" viewBox="0 0 8 8" fill="none" stroke={STATUS.verified} strokeWidth="1.6" strokeLinecap="round" aria-hidden="true">
+            <path d="M2 2 6 6M6 2 2 6" />
+          </svg>
+          <span className="text-[0.5rem] text-mist">Not identified in this demonstration</span>
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span
+            aria-hidden="true"
+            className="h-[7px] w-[7px] rounded-[2px] border border-[rgba(255,255,255,0.18)]"
+          />
+          <span className="text-[0.5rem] text-mist">Not yet screened</span>
+        </span>
       </div>
     </Chrome>
   );

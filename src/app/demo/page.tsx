@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 
 import { PageHero, Section, CardGrid, Card, PendingNotice } from "@/components/marketing/page-shell";
+import { BookingRoutes } from "@/components/marketing/booking-routes";
 import { DemoForm } from "@/components/forms/demo-form";
 
 export const metadata: Metadata = {
   title: "Book a demo",
   description:
-    "Book a 45-minute working session covering mine onboarding, supplier due diligence, sanctions screening, GPS verification, chain of custody, transaction reporting and escalation.",
+    "Book a 15-minute working session to see how FIQS can support your supply chain, from onboarding and due diligence to traceability and reporting.",
 };
 
 const COVERS = [
@@ -21,7 +22,7 @@ export default function DemoPage() {
       <PageHero
         eyebrow="Book a demo"
         title="See FIQS against your own supply chain"
-        lead="Book a 45-minute working session covering mine onboarding, supplier due diligence, sanctions screening, GPS verification, chain of custody, transaction reporting and escalation."
+        lead="Book a 15-minute working session to see how FIQS can support your supply chain, from onboarding and due diligence to traceability and reporting."
       />
 
       <Section eyebrow="What it covers" title="A working session, not a slideshow">
@@ -32,7 +33,17 @@ export default function DemoPage() {
         </CardGrid>
       </Section>
 
-      <Section tone="recessed" eyebrow="Request" title="Tell us about your operation">
+      <Section eyebrow="How to arrange it" title="Two ways to get a session">
+        <BookingRoutes />
+      </Section>
+
+      {/* Anchored so route 01 can land on it. */}
+      <Section
+        id="request"
+        tone="recessed"
+        eyebrow="Request"
+        title="Tell us about your operation"
+      >
         <DemoForm />
       </Section>
 

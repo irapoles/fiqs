@@ -10,21 +10,23 @@ export const metadata: Metadata = {
     "How FIQS structures responsible sourcing work around the OECD Due Diligence Guidance, the LBMA ASM Toolkit and the Responsible Minerals Assurance Process.",
 };
 
-/** Framework records are CMS-shaped per §7: name, edition, last reviewed, summary, source. */
+/** Framework records are CMS-shaped per §7: name, last reviewed, summary, source.
+ *
+ *  The edition line is gone from public copy rather than softened. It was a
+ *  note to ourselves — "Edition [CONFIRM BEFORE LAUNCH]" — and §28 is explicit
+ *  that a claim which cannot be evidenced comes out instead of being hedged.
+ *  When the editions are confirmed they can go back as real values. */
 const FRAMEWORKS = [
   {
     name: "OECD Due Diligence Guidance",
-    edition: "Edition [CONFIRM BEFORE LAUNCH]",
     body: "The five-step risk-based framework underpinning responsible mineral sourcing. FIQS structures each step as a workflow with owners, deadlines and evidence.",
   },
   {
     name: "LBMA ASM Toolkit",
-    edition: "Edition [CONFIRM BEFORE LAUNCH]",
     body: "The practical framework used to evaluate and engage artisanal and small-scale supply. FIQS digitises checklists, monthly reviews and supporting documentation.",
   },
   {
     name: "Responsible Minerals Assurance Process",
-    edition: "Edition [CONFIRM BEFORE LAUNCH]",
     body: "The third-party audit scheme operated by the Responsible Minerals Initiative. FIQS organises the evidence an assessor may request.",
   },
 ] as const;
@@ -87,7 +89,7 @@ export default function StandardsPage() {
       >
         <CardGrid>
           {FRAMEWORKS.map((f) => (
-            <Card key={f.name} meta={f.edition} title={f.name} body={f.body} />
+            <Card key={f.name} title={f.name} body={f.body} />
           ))}
         </CardGrid>
       </Section>
@@ -127,8 +129,12 @@ export default function StandardsPage() {
         </div>
       </Section>
 
-      {/* §7 requires the scope statement prominent, not hidden in the footer. */}
-      <Section tone="recessed" eyebrow="Scope" title="What FIQS does not do">
+      {/* §7 requires the scope statement prominent, not hidden in the footer.
+          Positive heading: it matches the opening sentence, which is what the
+          section actually leads with. The boundary itself is unchanged — the
+          paragraph still puts certification and accreditation with the
+          recognised bodies, which is the §1.3 requirement. */}
+      <Section tone="recessed" eyebrow="Scope" title="What FIQS does">
         <ScopeNote />
       </Section>
 
