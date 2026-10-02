@@ -66,20 +66,39 @@ export default function StandardsPage() {
         title="Built for responsible gold operators"
         lead="FIQS supports responsible sourcing workflows aligned with the LBMA ASM Toolkit, the OECD Due Diligence Guidance and the expectations of third-party assurance. The platform helps operators maintain structured records, document monthly due diligence, escalate risk and preserve audit-ready evidence."
         aside={
-          /* Faceted collage of industrial and artisanal work. Guide §05 asks
-             for both to carry equal dignity in the frame, and the three panels
-             here do exactly that. Decorative beside a heading that already
-             names the subject, so the alt is empty rather than a description
-             a screen reader would have to sit through. */
-          <Image
-            src="/photos/hero-collage.png"
-            alt=""
-            width={1285}
-            height={1418}
-            priority
-            sizes="(min-width: 1024px) 44vw, 80vw"
-            className="mx-auto h-auto w-full max-w-[26rem] lg:max-w-none"
-          />
+          /* One photograph rather than the faceted collage it replaces. The
+             brief asked for a cleaner crop with the focus held on credible
+             operators in safety gear, and a three-panel montage was working
+             against both.
+
+             Carried in a card so it sits in the same vocabulary as everything
+             else on the page — the 16px radius, no shadow. It is cropped to
+             4:3 rather than run at its native 16:9, which would letterbox
+             into a short strip beside a tall column of copy; the crop is
+             held left of centre so the nearest worker keeps his shoulder.
+
+             The image takes no grade, per guide §05: no gold wash and no
+             added contrast, so hi-vis colours and skin tones stay true.
+
+             It is described rather than given an empty alt. The collage was
+             an abstract composition and reasonably decorative; a photograph
+             of people at work carries content a screen reader should get.
+
+             Note what the caption does *not* say. Guide §05 forbids pairing
+             a site photograph with a compliance claim that site has not
+             earned, so nothing here attributes anything to the operation
+             shown. */
+          <div className="overflow-hidden rounded-[var(--radius-card)]">
+            <Image
+              src="/photos/operators.webp"
+              alt="Three workers in hard hats and high-visibility vests reviewing a site drawing together, one pointing across the plant behind them"
+              width={1672}
+              height={941}
+              priority
+              sizes="(min-width: 1024px) 44vw, 90vw"
+              className="h-full w-full object-cover object-[35%_center] aspect-[4/3]"
+            />
+          </div>
         }
       />
 
