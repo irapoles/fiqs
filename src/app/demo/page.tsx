@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { PageHero, Section, CardGrid, Card, PendingNotice } from "@/components/marketing/page-shell";
+import { PageHero, Section, CardGrid, Card } from "@/components/marketing/page-shell";
 import { BookingRoutes } from "@/components/marketing/booking-routes";
 import { DemoForm } from "@/components/forms/demo-form";
 
@@ -45,15 +45,6 @@ export default function DemoPage() {
         title="Tell us about your operation"
       >
         <DemoForm />
-      </Section>
-
-      <Section eyebrow="Contact routes" title="Response times">
-        {/* §15: no SLA until confirmed. */}
-        <PendingNotice>
-          Response-time commitments are not published yet. Sales, technical
-          support and grievance each carry their own target, and none appears
-          here until confirmed.
-        </PendingNotice>
       </Section>
     </>
   );
