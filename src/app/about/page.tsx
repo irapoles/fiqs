@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { PageHero, Section, CardGrid, Card, PendingNotice } from "@/components/marketing/page-shell";
+import { PageHero, Section, CardGrid, Card } from "@/components/marketing/page-shell";
 import { FinalCta } from "@/components/marketing/final-cta";
 
 export const metadata: Metadata = {
@@ -30,18 +30,6 @@ export default function AboutPage() {
             <Card key={p.title} title={p.title} body={p.body} />
           ))}
         </CardGrid>
-      </Section>
-
-      <Section tone="recessed" eyebrow="Leadership & company details" title="Pending approval">
-        {/* §17 and §28: leadership names, photos, investment figures, assessment
-            timelines, customer logos and outcome claims only appear once
-            approved. Omitted rather than softened. */}
-        <PendingNotice>
-          Leadership names and photographs, the operating entity, jurisdiction
-          and registered address are not published here yet. Under the project&rsquo;s
-          own rule, a claim that cannot be evidenced is removed rather than
-          softened — these appear once approved.
-        </PendingNotice>
       </Section>
 
       <FinalCta />
